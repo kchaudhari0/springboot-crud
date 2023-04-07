@@ -1,7 +1,6 @@
 package com.springboot.crud.Controller;
 
 import com.springboot.crud.Entity.Employee;
-import com.springboot.crud.dao.EmployeeDAO;
 import com.springboot.crud.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,35 +12,32 @@ public class EmployeeRestController {
 
     private EmployeeService employeeService;
 
-    public EmployeeRestController(EmployeeService theEmployeeService){
-        employeeService=theEmployeeService;
+    public EmployeeRestController(EmployeeService theEmployeeService) {
+        employeeService = theEmployeeService;
     }
 
 
     @GetMapping("/employees")
-    public List<Employee> findAll(){
+    public List<Employee> findAll() {
         return employeeService.findAll();
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Employee getEmployee(@PathVariable int employeeId)
-    {
-        Employee theEmployee= employeeService.findByID(employeeId);
+    public Employee getEmployee(@PathVariable int employeeId) {
+        Employee theEmployee = employeeService.findById(employeeId);
 
-        if(theEmployee==null)
-        {
-            throw new RuntimeException("Employee Not found "+ employeeId);
+        if (theEmployee == null) {
+            throw new RuntimeException("Employee Not found " + employeeId);
         }
 
         return theEmployee;
     }
 
     @PostMapping("/employees")
-    public Employee addEmployee(@RequestBody Employee theEmployee)
-    {
+    public Employee addEmployee(@RequestBody Employee theEmployee) {
         theEmployee.setId(0);
-       Employee newEmployee = employeeService.saveEmployee(theEmployee);
+        Employee newEmployee = employeeService.saveEmployee(theEmployee);
 
-       return newEmployee;
+        return newEmployee;
     }
 }
