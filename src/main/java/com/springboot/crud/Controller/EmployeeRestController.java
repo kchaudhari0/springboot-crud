@@ -40,4 +40,12 @@ public class EmployeeRestController {
 
         return newEmployee;
     }
+
+    @DeleteMapping("/employees/{employeeId}")
+    public String deletedEmployee(@PathVariable int employeeId){
+
+        employeeService.deleteById(employeeId);
+
+        return "Delete was successful by ID " + employeeId ;
+    }
 }
