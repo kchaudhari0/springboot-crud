@@ -42,33 +42,33 @@ public class SecurityConfig {
 
     // Adding support for Database based spring security Authentication
 
-    @Configuration
-    public class securityConfig
-    {
-        @Bean
-        public UserDetailsManager userDetailsManager(DataSource dataSource)
-        {
-            JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+//     @Configuration
+//     public class securityConfig
+//     {
+//         @Bean
+//         public UserDetailsManager userDetailsManager(DataSource dataSource)
+//         {
+//             JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 
-            jdbcUserDetailsManager.setUsersByUsernameQuery(
-                    "select user_id, pw , active from members where user_id=?");
+//             jdbcUserDetailsManager.setUsersByUsernameQuery(
+//                     "select user_id, pw , active from members where user_id=?");
 
-            jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
-                    "select user_id, role from roles where user_id=?" );
+//             jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(
+//                     "select user_id, role from roles where user_id=?" );
 
-            return jdbcUserDetailsManager;
-        }
-    }
+//             return jdbcUserDetailsManager;
+//         }
+//     }
     @Bean
     public SecurityFilterChain filterChain (HttpSecurity security) throws Exception{
 
         security.authorizeHttpRequests(configurer->
                 configurer
-                        .requestMatchers(HttpMethod.GET,"/service/employees").hasRole("EMPLOYEE")
-                .requestMatchers(HttpMethod.GET,"/service/employees/**").hasRole("EMPLOYEE")
-                .requestMatchers(HttpMethod.POST,"/service/employees").hasRole("MANAGER")
-                .requestMatchers(HttpMethod.PUT,"/service/employees").hasRole("MANAGER")
-                .requestMatchers(HttpMethod.DELETE,"/service/employees/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/service/employees").permitAll()
+                .requestMatchers(HttpMethod.GET,"/service/employees/**").permitAll()
+                .requestMatchers(HttpMethod.POST,"/service/employees").permitAll()
+                .requestMatchers(HttpMethod.PUT,"/service/employees").permitAll()
+                .requestMatchers(HttpMethod.DELETE,"/service/employees/**").permitAll()
                 );
 
 
